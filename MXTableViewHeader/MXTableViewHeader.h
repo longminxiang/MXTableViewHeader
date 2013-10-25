@@ -10,7 +10,8 @@
 typedef enum{
     MXTableViewHeaderStateNormal = 0,
     MXTableViewHeaderStatePreload,
-    MXTableViewHeaderStateLoading
+    MXTableViewHeaderStateLoading,
+    MXTableViewHeaderStateFinish
 } MXTableViewHeaderState;
 
 @interface UITableView (MXTableViewHeader)

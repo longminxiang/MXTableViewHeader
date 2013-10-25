@@ -71,8 +71,7 @@ static const char *stateBlockKey = "stateBlock";
 @implementation UITableView (MXTableViewHeader)
 
 #define SlideSpeed 240.0f
-
-float headerHeight;
+#define headerHeight 60
 
 - (void)addTableViewHeader:(UIView *)header stateBlock:(MXTableViewHeaderBlock)block
 {
@@ -81,7 +80,6 @@ float headerHeight;
     self.stateBlock = block;
     self.mxHeaderView = header;
     [self addSubview:self.mxHeaderView];
-    headerHeight = self.mxHeaderView.frame.size.height;
 }
 
 - (void)stopRefresh
@@ -91,8 +89,8 @@ float headerHeight;
     [UIView animateWithDuration:headerHeight / SlideSpeed delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
         [self setContentInset:UIEdgeInsetsZero];
     } completion:^(BOOL finished) {
-        if (self.stateBlock) self.stateBlock(MXTableViewHeaderStateNormal,0);
     }];
+    if (self.stateBlock) self.stateBlock(MXTableViewHeaderStateFinish,0);
 }
 
 - (void)startRefresh

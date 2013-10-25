@@ -16,6 +16,15 @@
 		E9A3FC1F181907C80044C00D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3FC1E181907C80044C00D /* AppDelegate.m */; };
 		E9A3FC21181907C80044C00D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9A3FC20181907C80044C00D /* Images.xcassets */; };
 		E9A3FC3F181907F00044C00D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3FC3E181907F00044C00D /* ViewController.m */; };
+		E9DC68E5181A5F34003B9F21 /* MXTableViewEGOHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DC68E4181A5F34003B9F21 /* MXTableViewEGOHeader.m */; };
+		E9DC68EF181A64DD003B9F21 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E9DC68E7181A64DD003B9F21 /* blackArrow.png */; };
+		E9DC68F0181A64DD003B9F21 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9DC68E8181A64DD003B9F21 /* blackArrow@2x.png */; };
+		E9DC68F1181A64DD003B9F21 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E9DC68E9181A64DD003B9F21 /* blueArrow.png */; };
+		E9DC68F2181A64DD003B9F21 /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9DC68EA181A64DD003B9F21 /* blueArrow@2x.png */; };
+		E9DC68F3181A64DD003B9F21 /* grayArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E9DC68EB181A64DD003B9F21 /* grayArrow.png */; };
+		E9DC68F4181A64DD003B9F21 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9DC68EC181A64DD003B9F21 /* grayArrow@2x.png */; };
+		E9DC68F5181A64DD003B9F21 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E9DC68ED181A64DD003B9F21 /* whiteArrow.png */; };
+		E9DC68F6181A64DD003B9F21 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9DC68EE181A64DD003B9F21 /* whiteArrow@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +44,16 @@
 		E9A3FC27181907C80044C00D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E9A3FC3D181907F00044C00D /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		E9A3FC3E181907F00044C00D /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E9DC68E3181A5F34003B9F21 /* MXTableViewEGOHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXTableViewEGOHeader.h; sourceTree = "<group>"; };
+		E9DC68E4181A5F34003B9F21 /* MXTableViewEGOHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXTableViewEGOHeader.m; sourceTree = "<group>"; };
+		E9DC68E7181A64DD003B9F21 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
+		E9DC68E8181A64DD003B9F21 /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
+		E9DC68E9181A64DD003B9F21 /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
+		E9DC68EA181A64DD003B9F21 /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
+		E9DC68EB181A64DD003B9F21 /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayArrow.png; sourceTree = "<group>"; };
+		E9DC68EC181A64DD003B9F21 /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
+		E9DC68ED181A64DD003B9F21 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
+		E9DC68EE181A64DD003B9F21 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +75,9 @@
 			children = (
 				E90AA61718195E8E00D2C59A /* MXTableViewHeader.h */,
 				E90AA61818195E8E00D2C59A /* MXTableViewHeader.m */,
+				E9DC68E3181A5F34003B9F21 /* MXTableViewEGOHeader.h */,
+				E9DC68E4181A5F34003B9F21 /* MXTableViewEGOHeader.m */,
+				E9DC68E6181A64DD003B9F21 /* image */,
 			);
 			path = MXTableViewHeader;
 			sourceTree = "<group>";
@@ -113,6 +135,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		E9DC68E6181A64DD003B9F21 /* image */ = {
+			isa = PBXGroup;
+			children = (
+				E9DC68E7181A64DD003B9F21 /* blackArrow.png */,
+				E9DC68E8181A64DD003B9F21 /* blackArrow@2x.png */,
+				E9DC68E9181A64DD003B9F21 /* blueArrow.png */,
+				E9DC68EA181A64DD003B9F21 /* blueArrow@2x.png */,
+				E9DC68EB181A64DD003B9F21 /* grayArrow.png */,
+				E9DC68EC181A64DD003B9F21 /* grayArrow@2x.png */,
+				E9DC68ED181A64DD003B9F21 /* whiteArrow.png */,
+				E9DC68EE181A64DD003B9F21 /* whiteArrow@2x.png */,
+			);
+			path = image;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -164,7 +201,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9DC68F2181A64DD003B9F21 /* blueArrow@2x.png in Resources */,
 				E9A3FC19181907C80044C00D /* InfoPlist.strings in Resources */,
+				E9DC68F6181A64DD003B9F21 /* whiteArrow@2x.png in Resources */,
+				E9DC68EF181A64DD003B9F21 /* blackArrow.png in Resources */,
+				E9DC68F4181A64DD003B9F21 /* grayArrow@2x.png in Resources */,
+				E9DC68F1181A64DD003B9F21 /* blueArrow.png in Resources */,
+				E9DC68F0181A64DD003B9F21 /* blackArrow@2x.png in Resources */,
+				E9DC68F3181A64DD003B9F21 /* grayArrow.png in Resources */,
+				E9DC68F5181A64DD003B9F21 /* whiteArrow.png in Resources */,
 				E9A3FC21181907C80044C00D /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -178,6 +223,7 @@
 			files = (
 				E9A3FC3F181907F00044C00D /* ViewController.m in Sources */,
 				E9A3FC1F181907C80044C00D /* AppDelegate.m in Sources */,
+				E9DC68E5181A5F34003B9F21 /* MXTableViewEGOHeader.m in Sources */,
 				E9A3FC1B181907C80044C00D /* main.m in Sources */,
 				E90AA61918195E8E00D2C59A /* MXTableViewHeader.m in Sources */,
 			);
