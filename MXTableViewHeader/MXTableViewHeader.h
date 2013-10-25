@@ -1,6 +1,5 @@
 //
 //  MXTableViewHeader.h
-//  MXTableViewHeaderDemo
 //
 //  Created by longminxiang on 13-10-24.
 //  Copyright (c) 2013年 eric. All rights reserved.
@@ -8,17 +7,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MXTableViewHeader : UIView
-
-@end
+typedef enum{
+    MXTableViewHeaderStateNormal = 0,
+    MXTableViewHeaderStatePreload,
+    MXTableViewHeaderStateLoading
+} MXTableViewHeaderState;
 
 @interface UITableView (MXTableViewHeader)
 
-@property (nonatomic, assign) BOOL headerLock;
+typedef void (^MXTableViewHeaderBlock)(MXTableViewHeaderState state, float dragPercent);
 
-- (void)addTableViewHeader:(UIView *)header preLoadBlock:(void (^)(float trigPersent))preLoadBlock triggeredBlock:(void (^)(void))triggeredBlock loadingBlock:(void (^)(void))loadingBlock;
+- (void)addTableViewHeader:(UIView *)header stateBlock:(MXTableViewHeaderBlock)block;
 
-- (void)stopAnimation;
-- (void)startAnimation;
+- (void)stopRefresh;
+- (void)startRefresh;
 
 @end

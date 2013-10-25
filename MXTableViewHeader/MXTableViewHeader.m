@@ -1,6 +1,5 @@
 //
 //  MXTableViewHeader.m
-//  MXTableViewHeaderDemo
 //
 //  Created by longminxiang on 13-10-24.
 //  Copyright (c) 2013年 eric. All rights reserved.
@@ -9,102 +8,125 @@
 #import "MXTableViewHeader.h"
 #import <objc/runtime.h>
 
-@implementation MXTableViewHeader
+@interface UITableView (MXTableViewHeaderPrivate)
 
-- (id)initWithFrame:(CGRect)frame
+@property (nonatomic, assign) BOOL trigLock;
+@property (nonatomic, assign) BOOL loadingLock;
+@property (nonatomic, strong) UIView *mxHeaderView;
+@property (nonatomic, copy) MXTableViewHeaderBlock stateBlock;
+
+@end
+
+@implementation UITableView (MXTableViewHeaderPrivate)
+
+static const char *trigLockKey = "trigLock";
+static const char *loadingLockKey = "loadingLock";
+static const char *mxHeaderViewKey = "mxHeaderView";
+static const char *stateBlockKey = "stateBlock";
+
+@dynamic trigLock,loadingLock,stateBlock,mxHeaderView;
+
+- (BOOL)trigLock
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+    return [objc_getAssociatedObject(self, trigLockKey) boolValue];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)setTrigLock:(BOOL)trigLock
 {
-    // Drawing code
+    objc_setAssociatedObject(self, trigLockKey, [NSNumber numberWithBool:trigLock], OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
-*/
+
+- (BOOL)loadingLock
+{
+    return [objc_getAssociatedObject(self, loadingLockKey) boolValue];
+}
+
+- (void)setLoadingLock:(BOOL)loadingLock
+{
+    objc_setAssociatedObject(self, loadingLockKey, [NSNumber numberWithBool:loadingLock], OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (UIView *)mxHeaderView
+{
+    return objc_getAssociatedObject(self, mxHeaderViewKey);
+}
+
+- (void)setMxHeaderView:(UIView *)mxHeaderView
+{
+    objc_setAssociatedObject(self, mxHeaderViewKey, mxHeaderView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (MXTableViewHeaderBlock)stateBlock
+{
+    return objc_getAssociatedObject(self, stateBlockKey);
+}
+
+- (void)setStateBlock:(MXTableViewHeaderBlock)stateBlock
+{
+    objc_setAssociatedObject(self, stateBlockKey, stateBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
 
 @end
 
 @implementation UITableView (MXTableViewHeader)
 
-@dynamic headerLock;
-
-#define HeaderHeight 70.0f
 #define SlideSpeed 240.0f
 
-static bool _trigLock;
-static const char *headerLockKey = "headerLock";
-static void (^_preLoadBlock)(float trigPersent);
-static void (^_triggeredBlock)(void);
-static void (^_loadingBlock)(void);
+float headerHeight;
 
-- (void)setHeaderLock:(BOOL)headerLock
+- (void)addTableViewHeader:(UIView *)header stateBlock:(MXTableViewHeaderBlock)block
 {
-    objc_setAssociatedObject(self, headerLockKey, [NSNumber numberWithBool:headerLock], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    self.loadingLock = NO;
+    self.trigLock = NO;
+    self.stateBlock = block;
+    self.mxHeaderView = header;
+    [self addSubview:self.mxHeaderView];
+    headerHeight = self.mxHeaderView.frame.size.height;
 }
 
-- (BOOL)headerLock
+- (void)stopRefresh
 {
-    return [objc_getAssociatedObject(self, headerLockKey) boolValue];
-}
-
-- (void)addTableViewHeader:(UIView *)header preLoadBlock:(void (^)(float trigPersent))preLoadBlock triggeredBlock:(void (^)(void))triggeredBlock loadingBlock:(void (^)(void))loadingBlock
-{
-    self.headerLock = NO;
-    _trigLock = NO;
-    _preLoadBlock = preLoadBlock;
-    _triggeredBlock = triggeredBlock;
-    _loadingBlock = loadingBlock;
-    [self addSubview:header];
-}
-
-- (void)stopAnimation
-{
-    _trigLock = NO;
-    self.headerLock = NO;
-    [UIView animateWithDuration:HeaderHeight / SlideSpeed delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+    self.loadingLock = NO;
+    self.trigLock = NO;
+    [UIView animateWithDuration:headerHeight / SlideSpeed delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
         [self setContentInset:UIEdgeInsetsZero];
     } completion:^(BOOL finished) {
-        if (_preLoadBlock) _preLoadBlock(0);
+        if (self.stateBlock) self.stateBlock(MXTableViewHeaderStateNormal,0);
     }];
 }
 
-- (void)startAnimation
+- (void)startRefresh
 {
-    self.headerLock = NO;
-    [UIView animateWithDuration:HeaderHeight / SlideSpeed animations:^{
-        [self setContentInset:UIEdgeInsetsMake(HeaderHeight, 0.0f, 0.0f, 0.0f)];
+    [self startAnimationWithDuration:headerHeight / SlideSpeed];
+}
+
+- (void)startAnimationWithDuration:(float)duration
+{
+    self.loadingLock = NO;
+    self.trigLock = NO;
+    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self setContentInset:UIEdgeInsetsMake(headerHeight, 0.0f, 0.0f, 0.0f)];
+    } completion:^(BOOL finished) {
+        if (self.stateBlock) self.stateBlock(MXTableViewHeaderStateLoading,1);
     }];
 }
 
 - (void)setContentOffset:(CGPoint)contentOffset
 {
     [super setContentOffset:contentOffset];
-    if (self.headerLock) return;
-    if (contentOffset.y > -60 && contentOffset.y < 0) {
-        if (_preLoadBlock) _preLoadBlock(ABS(contentOffset.y / HeaderHeight));
+    if (self.loadingLock) return;
+    if (contentOffset.y > -headerHeight && contentOffset.y <= 0) {
+        if (self.stateBlock) self.stateBlock(MXTableViewHeaderStateNormal,ABS(contentOffset.y / headerHeight));
+        self.trigLock = NO;
     }
-    else if (contentOffset.y <= -HeaderHeight) {
-        if (self.dragging && !_trigLock) {
-            if (_triggeredBlock) _triggeredBlock();
-            _trigLock = YES;
-        }
+    if (contentOffset.y < -headerHeight && self.dragging && !self.trigLock) {
+         if (self.stateBlock) self.stateBlock(MXTableViewHeaderStatePreload,1);
+        self.trigLock = YES;
     }
-    if (!self.dragging && _trigLock) {
-        self.headerLock = YES;
-//        [self setContentOffset:contentOffset];
-        float duration = ABS(ABS(contentOffset.y) - HeaderHeight) / SlideSpeed;
-        [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-            [self setContentInset:UIEdgeInsetsMake(HeaderHeight, 0.0f, 0.0f, 0.0f)];
-        } completion:^(BOOL finished) {
-            if (_loadingBlock) _loadingBlock();
-        }];
+    if (!self.dragging && self.trigLock) {
+        self.loadingLock = YES;
+        float duration = ABS(ABS(contentOffset.y) - headerHeight) / SlideSpeed;
+        [self startAnimationWithDuration:duration];
     }
 }
 
