@@ -8,42 +8,32 @@
 #import "MXTableViewHeader.h"
 #import <objc/runtime.h>
 
+#pragma mark === Extent getter and setter ===
+
 @interface UITableView (MXTableViewHeaderPrivate)
 
-@property (nonatomic, assign) BOOL trigLock;
-@property (nonatomic, assign) BOOL loadingLock;
 @property (nonatomic, strong) UIView *mxHeaderView;
 @property (nonatomic, copy) MXTableViewHeaderBlock stateBlock;
+@property (nonatomic, assign) MXTableViewHeaderState state;
 
 @end
 
 @implementation UITableView (MXTableViewHeaderPrivate)
 
-static const char *trigLockKey = "trigLock";
-static const char *loadingLockKey = "loadingLock";
 static const char *mxHeaderViewKey = "mxHeaderView";
 static const char *stateBlockKey = "stateBlock";
+static const char *stateKey = "state";
 
-@dynamic trigLock,loadingLock,stateBlock,mxHeaderView;
+@dynamic stateBlock,mxHeaderView,state;
 
-- (BOOL)trigLock
+- (MXTableViewHeaderState)state
 {
-    return [objc_getAssociatedObject(self, trigLockKey) boolValue];
+    return [objc_getAssociatedObject(self, stateKey) integerValue];
 }
 
-- (void)setTrigLock:(BOOL)trigLock
+- (void)setState:(MXTableViewHeaderState)state
 {
-    objc_setAssociatedObject(self, trigLockKey, [NSNumber numberWithBool:trigLock], OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (BOOL)loadingLock
-{
-    return [objc_getAssociatedObject(self, loadingLockKey) boolValue];
-}
-
-- (void)setLoadingLock:(BOOL)loadingLock
-{
-    objc_setAssociatedObject(self, loadingLockKey, [NSNumber numberWithBool:loadingLock], OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, stateKey, [NSNumber numberWithInt:state], OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (UIView *)mxHeaderView
@@ -68,6 +58,8 @@ static const char *stateBlockKey = "stateBlock";
 
 @end
 
+#pragma mark === UITableView Header Category ===
+
 @implementation UITableView (MXTableViewHeader)
 
 #define SlideSpeed 240.0f
@@ -75,8 +67,7 @@ static const char *stateBlockKey = "stateBlock";
 
 - (void)addTableViewHeader:(UIView *)header stateBlock:(MXTableViewHeaderBlock)block
 {
-    self.loadingLock = NO;
-    self.trigLock = NO;
+    self.state = MXTableViewHeaderStateNormal;
     self.stateBlock = block;
     self.mxHeaderView = header;
     [self addSubview:self.mxHeaderView];
@@ -84,8 +75,7 @@ static const char *stateBlockKey = "stateBlock";
 
 - (void)stopRefresh
 {
-    self.loadingLock = NO;
-    self.trigLock = NO;
+    self.state = MXTableViewHeaderStateFinish;
     [UIView animateWithDuration:headerHeight / SlideSpeed delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
         [self setContentInset:UIEdgeInsetsZero];
     } completion:^(BOOL finished) {
@@ -96,12 +86,11 @@ static const char *stateBlockKey = "stateBlock";
 - (void)startRefresh
 {
     [self startAnimationWithDuration:headerHeight / SlideSpeed];
+    self.state = MXTableViewHeaderStateLoading;
 }
 
 - (void)startAnimationWithDuration:(float)duration
 {
-    self.loadingLock = NO;
-    self.trigLock = NO;
     [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
         [self setContentInset:UIEdgeInsetsMake(headerHeight, 0.0f, 0.0f, 0.0f)];
     } completion:^(BOOL finished) {
@@ -112,19 +101,19 @@ static const char *stateBlockKey = "stateBlock";
 - (void)setContentOffset:(CGPoint)contentOffset
 {
     [super setContentOffset:contentOffset];
-    if (self.loadingLock) return;
-    if (contentOffset.y > -headerHeight && contentOffset.y <= 0) {
-        if (self.stateBlock) self.stateBlock(MXTableViewHeaderStateNormal,ABS(contentOffset.y / headerHeight));
-        self.trigLock = NO;
-    }
-    if (contentOffset.y < -headerHeight && self.dragging && !self.trigLock) {
-         if (self.stateBlock) self.stateBlock(MXTableViewHeaderStatePreload,1);
-        self.trigLock = YES;
-    }
-    if (!self.dragging && self.trigLock) {
-        self.loadingLock = YES;
+    if (self.state == MXTableViewHeaderStateLoading) return;
+    if (!self.dragging && self.state == MXTableViewHeaderStatePreload) {
         float duration = ABS(ABS(contentOffset.y) - headerHeight) / SlideSpeed;
         [self startAnimationWithDuration:duration];
+        self.state = MXTableViewHeaderStateLoading;
+    }
+    if (contentOffset.y > -headerHeight && contentOffset.y <= 0 && self.state != MXTableViewHeaderStateLoading) {
+        if (self.stateBlock) self.stateBlock(MXTableViewHeaderStateNormal,ABS(contentOffset.y / headerHeight));
+        self.state = MXTableViewHeaderStateNormal;
+    }
+    if (contentOffset.y < -headerHeight && self.dragging) {
+         if (self.stateBlock) self.stateBlock(MXTableViewHeaderStatePreload,1);
+        self.state = MXTableViewHeaderStatePreload;
     }
 }
 

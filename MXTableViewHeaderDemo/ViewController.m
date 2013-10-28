@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "MXTableViewEGOHeader.h"
+#import "MXTableViewSVHeader.h"
 
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -31,14 +31,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    CGRect rect = self.view.bounds;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        rect.origin.y = 64;
+    }
     self.tableView = [[UITableView alloc] init];
-    [self.tableView setFrame:self.view.bounds];
+    [self.tableView setFrame:rect];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
     [self.view addSubview:self.tableView];
     
     __weak ViewController *weakSelf = self;
-    [self.tableView addEGOTableViewHeaderWithBlock:^{
+    [self.tableView addSVTableViewHeaderWithBlock:^{
         double delayInSeconds = 2.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -49,7 +53,7 @@
     [self.tableView startRefresh];
     
     self.tableViewData = [NSMutableArray new];
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 25; i++) {
         [self.tableViewData addObject:[NSString stringWithFormat:@"%d",i]];
     }
 }

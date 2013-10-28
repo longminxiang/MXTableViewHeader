@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>E6627C2C-5974-44B7-B416-3388A29980EF</string>
+	<string>9566CEB3-8F30-4900-BB8F-E8032A3022A3</string>
 	<key>IDESourceControlProjectName</key>
 	<string>MXTableViewHeaderDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>1C14F035-F6D6-44AB-AEDB-C3130DA4AF03</key>
+		<key>7B6E6B62-378B-4B9A-9D57-7C814AE45170</key>
 		<string>https://github.com/longminxiang/MXTableViewHeader.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MXTableViewHeaderDemo.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>1C14F035-F6D6-44AB-AEDB-C3130DA4AF03</key>
+		<key>7B6E6B62-378B-4B9A-9D57-7C814AE45170</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>1C14F035-F6D6-44AB-AEDB-C3130DA4AF03</string>
+	<string>7B6E6B62-378B-4B9A-9D57-7C814AE45170</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>1C14F035-F6D6-44AB-AEDB-C3130DA4AF03</string>
+			<string>7B6E6B62-378B-4B9A-9D57-7C814AE45170</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MXTableViewHeader</string>
 		</dict>
