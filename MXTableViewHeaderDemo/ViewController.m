@@ -31,15 +31,17 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    CGRect rect = self.view.bounds;
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-        rect.origin.y = 64;
-    }
+    CGRect rect = self.view.frame;
     self.tableView = [[UITableView alloc] init];
     [self.tableView setFrame:rect];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
     [self.view addSubview:self.tableView];
+    
+    self.tableViewData = [NSMutableArray new];
+    for (int i = 0; i < 25; i++) {
+        [self.tableViewData addObject:[NSString stringWithFormat:@"%d",i]];
+    }
     
     __weak ViewController *weakSelf = self;
     [self.tableView addSVTableViewHeaderWithBlock:^{
@@ -51,11 +53,6 @@
     }];
     
     [self.tableView startRefresh];
-    
-    self.tableViewData = [NSMutableArray new];
-    for (int i = 0; i < 25; i++) {
-        [self.tableViewData addObject:[NSString stringWithFormat:@"%d",i]];
-    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
