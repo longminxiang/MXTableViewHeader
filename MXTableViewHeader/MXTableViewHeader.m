@@ -8,6 +8,9 @@
 #import "MXTableViewHeader.h"
 #import <objc/runtime.h>
 
+#define SlideSpeed 240.0f
+#define headerHeight 70
+
 #pragma mark === Extent getter and setter ===
 
 @interface UITableView (MXTableViewHeaderPrivate)
@@ -61,9 +64,6 @@ static const char *stateKey = "state";
 #pragma mark === UITableView Header Category ===
 
 @implementation UITableView (MXTableViewHeader)
-
-#define SlideSpeed 240.0f
-#define headerHeight 60
 
 - (void)addTableViewHeader:(UIView *)header stateBlock:(MXTableViewHeaderBlock)block
 {

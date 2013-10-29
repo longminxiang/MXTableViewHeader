@@ -30,8 +30,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setTitle:@"MXTableViewSVHeader"];
 	// Do any additional setup after loading the view.
     CGRect rect = self.view.frame;
+    rect.size.height -= 64;
     self.tableView = [[UITableView alloc] init];
     [self.tableView setFrame:rect];
     [self.tableView setDelegate:self];
