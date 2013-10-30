@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "MXTableViewSVHeader.h"
+#import "MXTableViewAlgorithmHeader.h"
 
 @interface ViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -30,7 +31,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setTitle:@"MXTableViewSVHeader"];
 	// Do any additional setup after loading the view.
     CGRect rect = self.view.frame;
     rect.size.height -= 64;
@@ -41,20 +41,32 @@
     [self.view addSubview:self.tableView];
     
     self.tableViewData = [NSMutableArray new];
-    for (int i = 0; i < 25; i++) {
-        [self.tableViewData addObject:[NSString stringWithFormat:@"%d",i]];
-    }
+    [self.tableViewData addObject:@"MXTableViewSVHeader"];
+    [self.tableViewData addObject:@"MXTableViewAlgorithmHeader"];
     
     __weak ViewController *weakSelf = self;
-    [self.tableView addSVTableViewHeaderWithBlock:^{
-        double delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [weakSelf.tableView stopRefresh];
-        });
-    }];
     
-    [self.tableView startRefresh];
+    if ([self.title isEqualToString:@"MXTableViewSVHeader"]) {
+        
+        [self.tableView addSVTableViewHeaderWithBlock:^{
+            double delayInSeconds = 2.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [weakSelf.tableView stopRefresh];
+            });
+        }];
+        [self.tableView startRefresh];
+    }
+    else if ([self.title isEqualToString:@"MXTableViewAlgorithmHeader"]) {
+        [self.tableView addAlgorithmHeaderWithBlock:^{
+            double delayInSeconds = 2.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [weakSelf.tableView stopRefresh];
+            });
+        }];
+        [self.tableView startRefresh];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -72,6 +84,13 @@
     NSString *string = self.tableViewData[indexPath.row];
     [cell.textLabel setText:string];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ViewController *vc = [ViewController new];
+    [vc setTitle:self.tableViewData[indexPath.row]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

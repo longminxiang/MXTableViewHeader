@@ -101,6 +101,7 @@ static const char *stateKey = "state";
 - (void)setContentOffset:(CGPoint)contentOffset
 {
     [super setContentOffset:contentOffset];
+    if (!self.mxHeaderView) return;
     if (self.state == MXTableViewHeaderStateLoading) return;
     if (!self.dragging && self.state == MXTableViewHeaderStatePreload) {
         float duration = ABS(ABS(contentOffset.y) - headerHeight) / SlideSpeed;

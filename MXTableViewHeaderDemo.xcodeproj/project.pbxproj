@@ -18,6 +18,8 @@
 		E9A3FC3F181907F00044C00D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3FC3E181907F00044C00D /* ViewController.m */; };
 		E9B7F80D181DFDB20075DEFF /* MXTableViewSVHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7F80C181DFDB20075DEFF /* MXTableViewSVHeader.m */; };
 		E9B7F80F181DFF540075DEFF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B7F80E181DFF540075DEFF /* QuartzCore.framework */; };
+		E9E7906A1820E58600132D15 /* MXTableViewAlgorithmHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E790691820E58600132D15 /* MXTableViewAlgorithmHeader.m */; };
+		E9E7906C1820ECCD00132D15 /* 11.png in Resources */ = {isa = PBXBuildFile; fileRef = E9E7906B1820ECCD00132D15 /* 11.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,9 @@
 		E9B7F80B181DFDB20075DEFF /* MXTableViewSVHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXTableViewSVHeader.h; sourceTree = "<group>"; };
 		E9B7F80C181DFDB20075DEFF /* MXTableViewSVHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXTableViewSVHeader.m; sourceTree = "<group>"; };
 		E9B7F80E181DFF540075DEFF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E9E790681820E58600132D15 /* MXTableViewAlgorithmHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXTableViewAlgorithmHeader.h; sourceTree = "<group>"; };
+		E9E790691820E58600132D15 /* MXTableViewAlgorithmHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXTableViewAlgorithmHeader.m; sourceTree = "<group>"; };
+		E9E7906B1820ECCD00132D15 /* 11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 11.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +68,9 @@
 				E90AA61818195E8E00D2C59A /* MXTableViewHeader.m */,
 				E9B7F80B181DFDB20075DEFF /* MXTableViewSVHeader.h */,
 				E9B7F80C181DFDB20075DEFF /* MXTableViewSVHeader.m */,
+				E9E790681820E58600132D15 /* MXTableViewAlgorithmHeader.h */,
+				E9E790691820E58600132D15 /* MXTableViewAlgorithmHeader.m */,
+				E9E7906B1820ECCD00132D15 /* 11.png */,
 			);
 			path = MXTableViewHeader;
 			sourceTree = "<group>";
@@ -172,6 +180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9A3FC19181907C80044C00D /* InfoPlist.strings in Resources */,
+				E9E7906C1820ECCD00132D15 /* 11.png in Resources */,
 				E9A3FC21181907C80044C00D /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,6 +197,7 @@
 				E9B7F80D181DFDB20075DEFF /* MXTableViewSVHeader.m in Sources */,
 				E9A3FC1B181907C80044C00D /* main.m in Sources */,
 				E90AA61918195E8E00D2C59A /* MXTableViewHeader.m in Sources */,
+				E9E7906A1820E58600132D15 /* MXTableViewAlgorithmHeader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[ViewController new]];
+    ViewController *vc = [ViewController new];
+    [vc setTitle:@"MXTableViewHeader"];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     [nav.navigationBar setTranslucent:NO];
     [self.window setRootViewController:nav];
     [self.window makeKeyAndVisible];
