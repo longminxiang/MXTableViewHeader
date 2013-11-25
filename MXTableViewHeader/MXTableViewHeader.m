@@ -8,8 +8,8 @@
 #import "MXTableViewHeader.h"
 #import <objc/runtime.h>
 
-#define SlideSpeed 240.0f
-#define headerHeight 70
+#define SlideSpeed 350.0f
+#define HEADER_HEIGHT 70
 
 #pragma mark === Extent getter and setter ===
 
@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UIView *mxHeaderView;
 @property (nonatomic, copy) MXTableViewHeaderBlock stateBlock;
 @property (nonatomic, assign) MXTableViewHeaderState state;
+@property (nonatomic, assign) UIEdgeInsets originInsets;
 
 @end
 
@@ -26,8 +27,9 @@
 static const char *mxHeaderViewKey = "mxHeaderView";
 static const char *stateBlockKey = "stateBlock";
 static const char *stateKey = "state";
+static const char *originInsetsKey = "originInsets";
 
-@dynamic stateBlock,mxHeaderView,state;
+@dynamic stateBlock,mxHeaderView,state,originInsets;
 
 - (MXTableViewHeaderState)state
 {
@@ -42,6 +44,16 @@ static const char *stateKey = "state";
 - (UIView *)mxHeaderView
 {
     return objc_getAssociatedObject(self, mxHeaderViewKey);
+}
+
+- (void)setOriginInsets:(UIEdgeInsets)originInsets
+{
+    objc_setAssociatedObject(self, originInsetsKey, [NSValue valueWithUIEdgeInsets:originInsets], OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (UIEdgeInsets)originInsets
+{
+    return [objc_getAssociatedObject(self, originInsetsKey) UIEdgeInsetsValue];
 }
 
 - (void)setMxHeaderView:(UIView *)mxHeaderView
@@ -65,11 +77,15 @@ static const char *stateKey = "state";
 
 @implementation UITableView (MXTableViewHeader)
 
+static int headerHeight;
+
 - (void)addTableViewHeader:(UIView *)header stateBlock:(MXTableViewHeaderBlock)block
 {
     self.state = MXTableViewHeaderStateNormal;
+    self.originInsets = self.contentInset;
     self.stateBlock = block;
     self.mxHeaderView = header;
+    headerHeight = HEADER_HEIGHT + self.originInsets.top;
     [self addSubview:self.mxHeaderView];
 }
 
@@ -77,7 +93,7 @@ static const char *stateKey = "state";
 {
     self.state = MXTableViewHeaderStateFinish;
     [UIView animateWithDuration:headerHeight / SlideSpeed delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
-        [self setContentInset:UIEdgeInsetsZero];
+        [self setContentInset:self.originInsets];
     } completion:^(BOOL finished) {
     }];
     if (self.stateBlock) self.stateBlock(MXTableViewHeaderStateFinish,0);
