@@ -83,10 +83,10 @@ static int headerHeight;
 {
     self.state = MXTableViewHeaderStateNormal;
     self.originInsets = self.contentInset;
-    self.stateBlock = block;
     self.mxHeaderView = header;
     headerHeight = HEADER_HEIGHT + self.originInsets.top;
     [self addSubview:self.mxHeaderView];
+    self.stateBlock = block;
 }
 
 - (void)stopRefresh
@@ -108,6 +108,7 @@ static int headerHeight;
 - (void)startAnimationWithDuration:(float)duration
 {
     [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self setContentOffset:CGPointMake(0, -headerHeight)];
         [self setContentInset:UIEdgeInsetsMake(headerHeight, 0.0f, 0.0f, 0.0f)];
     } completion:^(BOOL finished) {
         if (self.stateBlock) self.stateBlock(MXTableViewHeaderStateLoading,1);
@@ -120,9 +121,9 @@ static int headerHeight;
     if (!self.mxHeaderView) return;
     if (self.state == MXTableViewHeaderStateLoading) return;
     if (!self.dragging && self.state == MXTableViewHeaderStatePreload) {
+        self.state = MXTableViewHeaderStateLoading;
         float duration = ABS(ABS(contentOffset.y) - headerHeight) / SlideSpeed;
         [self startAnimationWithDuration:duration];
-        self.state = MXTableViewHeaderStateLoading;
     }
     if (contentOffset.y > -headerHeight && contentOffset.y <= 0 && self.state != MXTableViewHeaderStateLoading) {
         if (self.stateBlock) self.stateBlock(MXTableViewHeaderStateNormal,ABS(contentOffset.y / headerHeight));
