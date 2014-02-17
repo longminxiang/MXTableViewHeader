@@ -101,8 +101,10 @@ static int headerHeight;
 
 - (void)startRefresh
 {
-    [self startAnimationWithDuration:headerHeight / SlideSpeed];
-    self.state = MXTableViewHeaderStateLoading;
+    if (self.state != MXTableViewHeaderStateLoading) {
+        [self startAnimationWithDuration:headerHeight / SlideSpeed];
+        self.state = MXTableViewHeaderStateLoading;
+    }
 }
 
 - (void)startAnimationWithDuration:(float)duration
